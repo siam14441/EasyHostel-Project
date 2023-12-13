@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'es_logo.png' %}">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+<div class="navbar">
+        <div class="icon">
+            <h2 class="logo">EasyHostel</h2>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="{% url 'home' %}">HOME</a></li>
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+                <li><a href="{% url 'hostels' %}">HOSTELS</a></li>
+        
+                {% if request.session.user_id %}
+                    <!-- Show user's name and logout button if the user is authenticated -->
+                    <li><span>Hello, {{ request.session.user_username }}</span></li>
+                    <li><a href="{% url 'logout_view' %}">LOGOUT</a></li>
+                {% else %}
+                    <!-- Show login and signup buttons if the user is not authenticated -->
+                    <li><a href="{% url 'login_view' %}">LOGIN</a></li>
+                    <li><a href="{% url 'signup' %}">SIGNUP</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        
+        
+
+        <!-- <div class="search">
+            <input class="srch" type="search" name="" placeholder="Type To Search">
+            <a href="#">
+                <button class="btn">Search</button>
+            </a>
+        </div> -->
+
+</div>
+
+<div>{% block content %}{% endblock %}</div>
+
+</body>
+</html>
+

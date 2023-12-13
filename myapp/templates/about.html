@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>About Our Easy Hostel</title>
+    <link rel="stylesheet" href="{% static 'about.css' %}">
+</head>
+<body>
+<header>
+    <h1>About Our Easy Hostel</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <!-- Add more navigation links as needed -->
+    </ul>
+</nav>
+
+<main>
+    <section>
+        <h2>Project Overview</h2>
+        <p>Welcome to our Easy Hostel! Our project is designed to help students and visitors find hostels near a
+            specific university area.</p>
+        <p>Whether you're a student looking for accommodation close to your campus or a visitor exploring the area, our
+            Hostel Finder makes it easy to discover suitable hostel options.</p>
+    </section>
+
+    <section>
+        <h2>Our Mission</h2>
+        <p>Our mission is to simplify the process of finding hostels near universities. We aim to provide a
+            user-friendly platform that offers a comprehensive list of hostels, along with detailed information and user
+            reviews.</p>
+    </section>
+
+    <section>
+        <h2>Contact Us</h2>
+        <p>If you have any questions, suggestions, or feedback about our project, please feel free to reach out to
+            us:</p>
+        <address>
+            Email: <a href="mailto:contact@example.com">easyhostel@gmail.com</a><br>
+            Phone: 01941459033<br>
+        </address>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2023 Easy Hostel</p>
+</footer>
+</body>
+</html>

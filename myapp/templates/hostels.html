@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Hostels {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'hostels.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="title"><b> AVAILABLE HOSTELS </b></h3>
+
+    <div class="products-container">
+        {% for hostel in hostels %}
+            <div class="product" data-name="{{ hostel.HostelName }}">
+                <img src="{{ hostel.HostelImage.url }}" alt="">
+                <h3>{{ hostel.HostelName }}</h3>
+                <div class="price">Hostel near: {{ hostel.Location }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+<div class="products-preview">
+    {% for hostel in hostels %}
+        <div class="preview" data-target="{{ hostel.HostelName }}">
+            <i class="fas fa-times"></i>
+            <img src="{{ hostel.HostelImage.url }}" alt="">
+            <h3>{{ hostel.HostelName }}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <p>{{ hostel.Location }}</p>
+            <p>{{ hostel.Description }}</p>
+            <div class="price">Contact: {{ hostel.ContactNumber }}</div>
+            <div class="facilities">
+                <h3>Facilities:</h3>
+                <ol>
+                    {% for hostel_facility in hostel.facilities.all %}
+                        <li>
+                           <p> <strong>{{ hostel_facility.FacilityName }}</strong> : {{ hostel_facility.Description }}</p>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+            
+            <a href="{% url 'room_list' hostel.HostelID %}" class="btn btn-primary">Show Rooms</a>
+        </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+</div>
+<div class="pg-footer">
+    <footer class="footer">
+        <div class="footer-copyright">
+            <div class="footer-copyright-wrapper">
+                <p class="footer-copyright-text">
+                     ©2023 | All rights reserved by | Easy Hostel
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="{% static 'script.js' %}"></script>
+
+{% endblock %}

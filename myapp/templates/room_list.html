@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Hostels {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'hostels.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="title"><b>LIST OF ROOMS </b></h3>
+
+    <div class="products-container">
+        {% if rooms %}
+        {% for room in rooms %}
+            <div class="product" data-name="{{ room.RoomID }}">
+                <img src="{{ room.RoomImage.url }}" alt="">
+                <h3>{{ room.RoomType }}</h3>
+                <div class="price"><strong>Room Number:</strong> {{ room.RoomNumber }}</div>
+                <div class="price"><strong>Availability:</strong> {% if room.Availability %}Available{% else %}Not Available{% endif %}</div>
+                <div class="price"><strong>Price:</strong> BDT {{ room.Price }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1>No rooms available at the moment. Please check back later.</h1>
+    {% endif %}
+    </div>
+
+</div>
+<div class="products-preview">
+    {% for room in rooms %}
+        <div class="preview" data-target="{{ room.RoomID }}">
+            <i class="fas fa-times"></i>
+            <img src="{{ room.RoomImage.url }}" alt="">
+            <h3>{{ room.RoomType }}</h3>
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>            </div>
+            <p><strong>Room Number:</strong> {{ room.RoomNumber }}</p>
+            <p><strong>Availability:</strong> {% if room.Availability %}Available{% else %}Occupied{% endif %}</p>
+            <p><strong>Price:</strong> BDT {{ room.Price }}</p>
+            {% if room.Availability %}
+                <div class="buttons">
+                    <a href="#" class="buy book-now-button"  data-room-id="{{ room.RoomID }}">Book Now</a>
+                </div>
+            {% else %}
+                <p>Contact {{ room.HostelID.ContactNumber }} for more information</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<div class="go-back-button">
+    <a href="{% url 'hostels' %}" class="btn btn-primary">Go Back to Hostels</a>
+</div>
+
+</div>
+<div class="pg-footer">
+    <footer class="footer">
+        <div class="footer-copyright">
+            <div class="footer-copyright-wrapper">
+                <p class="footer-copyright-text">
+                     ©2023 | All rights reserved by | Easy Hostel
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="{% static 'script.js' %}"></script>
+
+<!-- In your Django template file (e.g., your_template.html) -->
+<script>
+    $(document).ready(function () {
+        $('.book-now-button').click(function (event) {
+            event.preventDefault();
+
+            // Check if the user is authenticated
+            {% if request.session.user_id %}
+                // Retrieve the room ID from the data attribute
+                var roomID = $(this).data('room-id');
+
+                // If authenticated, make an AJAX request to save the booking
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "book_now_view" %}',  // Replace with your actual Django view URL
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        user_id: parseInt('{{ request.session.user_id }}'),
+                        room_id: roomID,  // Include the room ID in the data
+                        // Include any additional data you want to send to the server
+                    },
+                    success: function (response) {
+                        // Handle the response from the server (e.g., show a success message)
+                        alert('Your booking has been listed and will contact you soon.');
+                    },
+                    error: function (error) {
+                        // Handle errors (e.g., show an error message)
+                        alert('Error saving the booking.');
+                    }
+                });
+            {% else %}
+                // If not authenticated, redirect the user to the login page
+                window.location.href = "{% url 'login_view' %}";
+            {% endif %}
+        });
+    });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} SignUp | EasyHostel {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'signup.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="background-pattern"></div>
+    <div class="message">
+        <h2>Logout Successful</h2>
+        <p>You have been successfully logged out.</p>
+        <p><a href="{% url 'login_view' %}">Login</a> again or go to the <a href="{% url 'home' %}">home page</a>.</p>
+    </div>
+</div>
+
+
+{% endblock %}

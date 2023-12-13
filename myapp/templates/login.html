@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} SignUp | EasyHostel {% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'signup.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="background-pattern"></div>
+    <div class="form">
+        <h2>Login Here</h2>
+        <form method="post" action="{% url 'login_view' %}">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Enter Email Here" required>
+            <input type="password" name="password" placeholder="Enter Password Here" required>
+            <button type="submit" class="btnn">Login</button>
+        </form>
+
+        {% if error %}
+            <!-- Display the error message if it exists -->
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        {% if hashed_password %}
+            <!-- Display the hashed password if it exists -->
+            <p class="hashed-password">{{ hashed_password }}</p>
+        {% endif %}
+        <p class="link">Don't have an account?<br>
+            <a href="{% url 'signup' %}">Sign up</a> here.
+        </p>
+    </div>
+</div>
+
+
+{% endblock %}

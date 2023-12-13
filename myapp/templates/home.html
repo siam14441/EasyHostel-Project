@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <title>EasyHostel</title>
+    <link rel="shortcut icon" href="{% static 'es_logo.png' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+
+</head>
+
+<body style="background-image: url('{% static 'home2.jpg' %}'); background-size: cover; background-position: center;">
+
+<div class="main">
+    <div class="navbar">
+        <div class="icon">
+            <h2 class="logo">EasyHostel</h2>
+        </div>
+
+        <div class="menu">
+            <ul>
+                <li><a href="{% url 'home' %}">HOME</a></li>
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+                <li><a href="{% url 'hostels' %}">HOSTELS</a></li>
+        
+                {% if request.session.user_id %}
+                    <!-- Show user's name and logout button if the user is authenticated -->
+                    <li><span>Hello, {{ request.session.user_username }}</span></li>
+                    <li><a href="{% url 'logout_view' %}">LOGOUT</a></li>
+                {% else %}
+                    <!-- Show login and signup buttons if the user is not authenticated -->
+                    <li><a href="{% url 'login_view' %}">LOGIN</a></li>
+                    <li><a href="{% url 'signup' %}">SIGNUP</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        
+        
+
+        <!-- <div class="search">
+            <input class="srch" type="search" name="" placeholder="Type To text">
+            <a href="#">
+                <button class="btn">Search</button>
+            </a>
+        </div> -->
+
+    </div>
+    <div class="content">
+        <h1>Easy <br><span>Hostel</span> <br></h1>
+        <p class="par">A platform through which people, especially university students who live far from their hometown,<br>can
+            effortlessly find suitable accommodation for a particular amount of time.<br>
+
+        </p>
+
+        <button class="cn"><a href="{% url 'hostels' %}">JOIN US</a></button>
+
+        <div class="form">
+            <h2>Login Here</h2>
+            <form method="post" action="{% url 'login_view' %}">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Enter Email Here" required>
+                <input type="password" name="password" placeholder="Enter Password Here" required>
+                <button type="submit" class="btnn">Login</button>
+            </form>
+    
+            {% if error %}
+                <!-- Display the error message if it exists -->
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            {% if hashed_password %}
+                <!-- Display the hashed password if it exists -->
+                <p class="hashed-password">{{ hashed_password }}</p>
+            {% endif %}
+            <p class="link">Don't have an account?<br>
+                <a href="{% url 'signup' %}">Sign up</a> here.
+            </p>
+    </div>
+    </div>
+</div>
+<!--<div class="footer">-->
+<!--        <footer>-->
+<!--            <p>&copy; 2023 EasyHostel. All  rights reserved.</p>-->
+<!--        </footer>-->
+<!--</div>-->
+<div class="pg-footer">
+    <footer class="footer">
+        <div class="footer-copyright">
+            <div class="footer-copyright-wrapper">
+                <p class="footer-copyright-text">
+                     ©2023 | All rights reserved by | Easy Hostel
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+</body>
+
+</html>
